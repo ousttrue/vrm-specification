@@ -1,0 +1,51 @@
+{
+  "title": "NodeTransformBind",
+  "type": "object",
+  "description": "Node transform associated with a expression",
+  "allOf": [ { "$ref": "glTFProperty.schema.json" } ],
+  "properties": {
+    "node": {
+      "allOf": [{ "$ref": "glTFid.schema.json" }],
+      "description": "The node index."
+    },
+    "rotation": {
+      "type": "array",
+      "description": "The node's unit quaternion rotation in the order (x, y, z, w), where w is the scalar.",
+      "items": {
+        "type": "number",
+        "minimum": -1.0,
+        "maximum": 1.0
+      },
+      "minItems": 4,
+      "maxItems": 4,
+      "default": [0.0, 0.0, 0.0, 1.0]
+    },
+    "scale": {
+      "type": "array",
+      "description": "The node's non-uniform scale, given as the scaling factors along the x, y, and z axes.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [1.0, 1.0, 1.0]
+    },
+    "translation": {
+      "type": "array",
+      "description": "The node's translation along the x, y, and z axes.",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [0.0, 0.0, 0.0]
+    },
+    "extensions": { },
+    "extras": { }
+  },
+  "required": [
+    "node",
+    "index",
+    "weight"
+  ]
+}

@@ -24,6 +24,8 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
 
 ### JSON Schema
 
+[VRMC_vrm_expressions_joint.schema.json](schema/VRMC_vrm_expressions_joint.schema.json)
+
 ```json
 {
   "extensionsUsed": [
@@ -50,7 +52,7 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
             /* ここから */
             "extensions": {
               "VRMC_vrm_expressions_joint" {
-                "jointTransformBinds": [
+                "nodeTransformBinds": [
                   {
                     "node": 1,
                     "translation": [1, 2, 3],
