@@ -1,8 +1,7 @@
-# VRMC_vrm_expressions_joint
+# VRMC_vrm_expressions_node_transform
 
 > [!NOTE]
 > 名前検討中。
-> vrm_expression_node_transform が正確な気がしてきた。
 
 ## Contributors
 
@@ -24,13 +23,13 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
 
 ### JSON Schema
 
-[VRMC_vrm_expressions_joint.schema.json](schema/VRMC_vrm_expressions_joint.schema.json)
+[schema.json](schema/VRMC_vrm_expressions_node_transform.schema.json)
 
 ```json
 {
   "extensionsUsed": [
     "VRMC_vrm"
-    "VRMC_vrm_expressions_joint",
+    "VRMC_vrm_expressions_node_transform",
   ],
   "extensions": {
     "VRMC_vrm": {
@@ -51,7 +50,7 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
             "overrideMouth": "none"
             /* ここから */
             "extensions": {
-              "VRMC_vrm_expressions_joint" {
+              "VRMC_vrm_expressions_node_transform" {
                 "nodeTransformBinds": [
                   {
                     "node": 1,
