@@ -8,9 +8,19 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "The node index."
     },
-    "rotation": {
+    "offsetTranslation": {
       "type": "array",
-      "description": "The node's unit quaternion rotation in the order (x, y, z, w), where w is the scalar.",
+      "description": "t = lerp(init_t, init_t + t, expression_weight)",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 3,
+      "maxItems": 3,
+      "default": [0.0, 0.0, 0.0]
+    },
+    "offsetRotation": {
+      "type": "array",
+      "description": "r = slerp(init_r, r * init_r, expression_weight)",
       "items": {
         "type": "number",
         "minimum": -1.0,
@@ -20,25 +30,15 @@
       "maxItems": 4,
       "default": [0.0, 0.0, 0.0, 1.0]
     },
-    "scale": {
+    "targetScale": {
       "type": "array",
-      "description": "The node's non-uniform scale, given as the scaling factors along the x, y, and z axes.",
+      "description": "s = lerp(init_s, s, expression_weight)",
       "items": {
         "type": "number"
       },
       "minItems": 3,
       "maxItems": 3,
       "default": [1.0, 1.0, 1.0]
-    },
-    "translation": {
-      "type": "array",
-      "description": "The node's translation along the x, y, and z axes.",
-      "items": {
-        "type": "number"
-      },
-      "minItems": 3,
-      "maxItems": 3,
-      "default": [0.0, 0.0, 0.0]
     },
     "extensions": { },
     "extras": { }

@@ -54,9 +54,9 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
                 "nodeTransformBinds": [
                   {
                     "node": 1,
-                    "translation": [1, 2, 3],
-                    "rotation": [0, 0, 0, 1],
-                    "scale": [1, 2, 3],
+                    "offsetTranslation": [1, 2, 3],
+                    "offsetRotation": [0, 0, 0, 1],
+                    "targetScale": [1, 2, 3],
                   },
                 ],
               },
@@ -101,7 +101,7 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
 
 ### NodeTransformBind
 
-Expression と Node のローカル TRS を結びつけます。
+Expression と Node のローカルTransform を結びつけます。
 
 > [!NOTE]
 > humanoid bone と子孫にhumanoid bone を持つ node は禁止。
@@ -111,24 +111,30 @@ Expression と Node のローカル TRS を結びつけます。
 > Scale と spring など組み合わせで表示が乱れる設定はありうる。
 > モデル作成者に委ねる。
 
-| 名前        | 備考                                                                        |
-|:------------|:----------------------------------------------------------------------------|
-| node        | 対象のnode のindex。humanoid bone と子孫にhumanoid bone を持つ node は禁止。|
-| translation | 適用したときの移動値(float3)                                                |
-| rotaion     | 適用したときの回転値(float4)                                                |
-| scale       | 適用したときの回転値(float3)。負の値禁止                                    |
+| 名前              | 備考                                                               |
+|:------------------|:-------------------------------------------------------------------|
+| node              | 対象のnode のindex。自身か子孫が humanoid bone である node は禁止。|
+| offsetTranslation | 適用したときの移動値(float3)                                       |
+| offsetRotaion     | 適用したときの回転値(float4)                                       |
+| targetScale       | 適用したときの拡大値(float3)。負の値禁止。non uniform 可           |
 
 #### Logic
 
-node local の TRS を上書きする。
+0-1 で線形に影響が出る、かつ無効値を表現できるように始点と終点を以下のように定義する。
+
+|type|始点  |終点      |無効値   | value                             |
+|----|------|----------|---------|-----------------------------------|
+| T  | init | init + t |(0,0,0)  | T = init + t * weight             |
+| R  | init | r * init |(0,0,0,1)| R = slerp(init, r * init, weight) |
+| S  | init | s        |init     | S = lerp(init, s, weight)         |
 
 ```cs
 // Unity試作版
 expression.transform.SetLocalPositionAndRotation(
-    init.LocalPosition + expression.Translation * weight,
-    Quaternion.Slerp(init.LocalRotation, init.LocalRotation * expression.Rotation, weight)
+    init.LocalPosition + expression.OffsetTranslation * weight,
+    Quaternion.Slerp(init.LocalRotation, init.LocalRotation * expression.OffsetRotation, weight)
     );
-expression.transform.localScale = expression.Scale * weight;
+expression.transform.localScale = Vector3.lerp(init.loccalScale, expression.TargetScale, weight);
 ```
 
 #### 処理順
