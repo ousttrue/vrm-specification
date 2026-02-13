@@ -30,7 +30,7 @@
       "maxItems": 4,
       "default": [0.0, 0.0, 0.0, 1.0]
     },
-    "targetScale": {
+    "offsetScale": {
       "type": "array",
       "description": "s = lerp(init_s, s, expression_weight)",
       "items": {

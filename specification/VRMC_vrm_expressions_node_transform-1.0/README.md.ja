@@ -56,7 +56,7 @@ VRMC_vrm-1.0 の expression に node の変形を加えます。
                     "node": 1,
                     "offsetTranslation": [1, 2, 3],
                     "offsetRotation": [0, 0, 0, 1],
-                    "targetScale": [1, 2, 3],
+                    "offsetScale": [1, 2, 3],
                   },
                 ],
               },
@@ -116,7 +116,7 @@ Expression と Node のローカルTransform を結びつけます。
 | node              | 対象のnode のindex。自身か子孫が humanoid bone である node は禁止。|
 | offsetTranslation | 適用したときの移動値(float3)                                       |
 | offsetRotaion     | 適用したときの回転値(float4)                                       |
-| targetScale       | 適用したときの拡大値(float3)。負の値禁止。non uniform 可           |
+| offsetScale       | 適用したときの拡大値(float3)。負の値禁止。non uniform 可           |
 
 #### Logic
 
@@ -126,7 +126,7 @@ Expression と Node のローカルTransform を結びつけます。
 |----|------|----------|---------|-----------------------------------|
 | T  | init | init + t |(0,0,0)  | T = init + t * weight             |
 | R  | init | r * init |(0,0,0,1)| R = slerp(init, r * init, weight) |
-| S  | init | s        |init     | S = lerp(init, s, weight)         |
+| S  | init | s        |(0,0,0)  | S = lerp(init, init * s, weight)         |
 
 ```cs
 // Unity試作版
@@ -134,7 +134,7 @@ expression.transform.SetLocalPositionAndRotation(
     init.LocalPosition + expression.OffsetTranslation * weight,
     Quaternion.Slerp(init.LocalRotation, init.LocalRotation * expression.OffsetRotation, weight)
     );
-expression.transform.localScale = Vector3.lerp(init.loccalScale, expression.TargetScale, weight);
+expression.transform.localScale = Vector3.lerp(init.loccalScale, init.localScale * expression.OffsetScale, weight);
 ```
 
 #### 処理順
