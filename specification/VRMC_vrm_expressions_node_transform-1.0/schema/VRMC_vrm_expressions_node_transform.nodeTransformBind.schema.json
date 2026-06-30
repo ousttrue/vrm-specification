@@ -8,7 +8,7 @@
       "allOf": [{ "$ref": "glTFid.schema.json" }],
       "description": "The node index."
     },
-    "offsetTranslation": {
+    "relativeTranslation": {
       "type": "array",
       "description": "t = lerp(init_t, init_t + t, expression_weight)",
       "items": {
@@ -18,7 +18,7 @@
       "maxItems": 3,
       "default": [0.0, 0.0, 0.0]
     },
-    "offsetRotation": {
+    "relativeRotation": {
       "type": "array",
       "description": "r = slerp(init_r, r * init_r, expression_weight)",
       "items": {
@@ -30,7 +30,7 @@
       "maxItems": 4,
       "default": [0.0, 0.0, 0.0, 1.0]
     },
-    "offsetScale": {
+    "relativeScale": {
       "type": "array",
       "description": "s = lerp(init_s, s, expression_weight)",
       "items": {
