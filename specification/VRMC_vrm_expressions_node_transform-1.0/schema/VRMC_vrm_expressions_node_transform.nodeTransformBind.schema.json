@@ -10,7 +10,7 @@
     },
     "relativeTranslation": {
       "type": "array",
-      "description": "t = lerp(init_t, init_t + t, expression_weight)",
+      "description": "t = init_t + lerp(zero, relativeTranslation, expression_weight)",
       "items": {
         "type": "number"
       },
@@ -20,7 +20,7 @@
     },
     "relativeRotation": {
       "type": "array",
-      "description": "r = slerp(init_r, r * init_r, expression_weight)",
+      "description": "r = init_r * slerp(identity, relativeRotation, expression_weight)",
       "items": {
         "type": "number",
         "minimum": -1.0,
@@ -30,9 +30,9 @@
       "maxItems": 4,
       "default": [0.0, 0.0, 0.0, 1.0]
     },
-    "relativeScale": {
+    "targetScale": {
       "type": "array",
-      "description": "s = lerp(init_s, s, expression_weight)",
+      "description": "s = lerp(init_s, targetScale, expression_weight)",
       "items": {
         "type": "number"
       },
