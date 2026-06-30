@@ -146,3 +146,26 @@ expression.transform.SetLocalPositionAndRotation(
 ```
 expression.transform.localScale = Vector3.lerp(init.loccalScale, init.localScale * expression.targetScale, weight);
 ```
+
+### 同じボーンに対して複数の NodeTransform の重みが有効なったとき
+
+```
+expression.transform.SetLocalPositionAndRotation(
+    // T: init + lerp(zeroVector3, relative, weight)
+    init.LocalPosition 
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation0, weight0)
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation1, weight1)
+    + Vector3.Lerp(Vector3.zero, expression.RelativeTranslation2, weight2)
+    ,
+    // R: init * slerp(identityQuaternion, relative, weight)
+    init.LocalRotation 
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation0, weight0)
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation1, weight1)
+    * Quaternion.Slerp(Quaternion.identity, expression.RelativeRotation2, weight2)
+    );
+```
+
+- Transform は一意に決まり自明
+- Rotation の乗算順は expression の定義順
+- Scale に関しては未定義
+
